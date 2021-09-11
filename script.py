@@ -6,6 +6,7 @@ from scipy.spatial import distance_matrix
 from numpy import pi, cos, sin, arccos, arange
 import mpl_toolkits.mplot3d
 import matplotlib.pyplot as pp
+from collections import defaultdict
 
 def parsing(filename) : #récupération des coordonnées
 	with open(filename, "r") as pdb_file :
@@ -69,15 +70,17 @@ def neighbor(mat_dist) :
 				index_list_+i.append(i)
 	'''
 
-	# dic[all_lists] = {}
+	'''
+	dic_list = defaultdict(list)
 	for i in range(len(mat_dist)) :
 		all_lists = "index_list_{}".format(i)
-		dic_list[all_lists] = {}
+		#dic_list[all_lists] = {}
 		for row in mat_dist.iterrows() :
 			if (mat_dist[mat_dist == 1]) :
 				dic_list[all_lists].append(i)
+	'''
 
-	print(all_lists)
+	# print(all_lists)
 	return(mat_dist)
 	# print(matrix_distance)
 	# return matrix_neighbor
@@ -114,8 +117,30 @@ def neighbor(mat_dist) :
 				print(res_name, res_num, x, y, z)
 '''
 
+def neigh_coord(neigh) :
+	index_list = mat_dist.index.values.tolist()
+	row_list = mat_dist.values.tolist()
+	dic_neigh = {}
+	for index in range(len(index_list)) :
+		list_neigh = []
+		for row in range(len(row_list[index])-1) :
+			if row_list[index][row] == 1 :
+				list.neigh.append(row)
+		dic_neigh[index] = list_neigh
+	print(dic_list, dic_list.items())
 
+	return dic_neigh
 
+'''
+	dic_list = defaultdict(list)
+	for i in range(len(mat_dist)) :
+		all_lists = "index_list_{}".format(i)
+		#dic_list[all_lists] = {}
+		for row in mat_dist.iterrows() :
+			if (mat_dist[mat_dist == 1]) :
+				dic_list[all_lists].append(i)	
+	print(dic_list, dic_list.items())
+'''
 def Sphere(number_points) :
    index = arange(0, number_points, dtype = float) + 0.5
    phi = arccos(1 - 2*index/number_points)
@@ -131,4 +156,5 @@ pars = parsing(filename)
 #distance(pars)
 dist_matrix = distance(pars)
 neigh = neighbor(dist_matrix)
+neigh_2 = neigh_coord(dist_matrix)
 Sphere(30)
