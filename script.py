@@ -55,6 +55,7 @@ def neighbor(mat_dist) :
 	print(fold)
 	mat_dist[mat_dist <= fold] = 1
 	mat_dist[mat_dist > fold] = 0
+	mat_dist.to_csv("mat_dist"+filename+".txt", sep = "\t")
 	# print(type(mat_dist))
 	# matrix_distance[matrix_distance < fold] = 1
 	# matrix_distance[matrix_distance > fold] = 0
@@ -117,7 +118,7 @@ def neighbor(mat_dist) :
 				print(res_name, res_num, x, y, z)
 '''
 
-def neigh_coord(neigh) :
+def neigh_coord(mat_dist) :
 	index_list = mat_dist.index.values.tolist()
 	row_list = mat_dist.values.tolist()
 	dic_neigh = {}
@@ -125,10 +126,15 @@ def neigh_coord(neigh) :
 		list_neigh = []
 		for row in range(len(row_list[index])-1) :
 			if row_list[index][row] == 1 :
-				list.neigh.append(row)
+				list_neigh.append(row)
 		dic_neigh[index] = list_neigh
-	print(dic_list, dic_list.items())
-
+	# print(dic_neigh, dic_neigh.items())
+	# print(dic_neigh)
+	'''
+	with open("dic_neigh_"+filename+".txt", "w") as dic_file :
+		for item in dic_neigh :
+			dic_file.write(str(item))
+	'''
 	return dic_neigh
 
 '''
