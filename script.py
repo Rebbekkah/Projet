@@ -142,12 +142,13 @@ def neigh_coord(neigh) :
 	print(dic_list, dic_list.items())
 '''
 def Sphere(number_points) :
-   index = arange(0, number_points, dtype = float) + 0.5
-   phi = arccos(1 - 2*index/number_points)
-   theta = pi * (1 + 5**0.5) * index
-   x, y, z = cos(theta) * sin(phi), sin(theta) * sin(phi), cos(phi)
-   pp.figure().add_subplot(111, projection = '3d').scatter(x, y, z)
-   pp.show()
+	number_points = int(input("Rentrez le nombre de points souhaité pour la sphère"))
+	index = arange(0, number_points, dtype = float) + 0.5
+	phi = arccos(1 - 2*index/number_points)
+	theta = pi * (1 + 5**0.5) * index
+	x, y, z = cos(theta) * sin(phi), sin(theta) * sin(phi), cos(phi)
+	pp.figure().add_subplot(111, projection = '3d').scatter(x, y, z)
+	pp.show()
 
 
 
@@ -156,5 +157,5 @@ pars = parsing(filename)
 #distance(pars)
 dist_matrix = distance(pars)
 neigh = neighbor(dist_matrix)
-neigh_2 = neigh_coord(dist_matrix)
+neigh_2 = neigh_coord(neigh)
 Sphere(30)
