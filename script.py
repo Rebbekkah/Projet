@@ -118,10 +118,13 @@ def neighbor(mat_dist) :
 				print(res_name, res_num, x, y, z)
 '''
 
-def neigh_coord(mat_dist) :
+def neigh_coord(mat_dist, coord) :
 	index_list = mat_dist.index.values.tolist()
 	row_list = mat_dist.values.tolist()
 	dic_neigh = {}
+
+	dic_coor_neigh = {}
+
 	for index in range(len(index_list)) :
 		list_neigh = []
 		for row in range(len(row_list[index])-1) :
@@ -135,7 +138,15 @@ def neigh_coord(mat_dist) :
 		for item in dic_neigh :
 			dic_file.write(str(item))
 	'''
-	
+	for atom in dic_neigh.keys() :
+		for index in dic_neigh.values() :
+			list_neigh_coor = []
+			for row in coord.iloc[:, 4:] :
+				list_neigh_coor.append(row) 
+			dic_coor_neigh[index] = list_neigh_coor
+		print(dic_coor_neigh)
+
+
 	return dic_neigh
 
 '''
@@ -164,6 +175,6 @@ if __name__ == "__main__" :
 	#distance(pars)
 	dist_matrix = distance(pars)
 	neigh = neighbor(dist_matrix)
-	neigh_2 = neigh_coord(neigh)
+	neigh_2 = neigh_coord(neigh, pars)
 	number_points = int(input("Rentrez le nombre de points souhaité pour la sphère : "))
 	Sphere(number_points)
