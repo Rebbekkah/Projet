@@ -135,6 +135,7 @@ def neigh_coord(mat_dist) :
 		for item in dic_neigh :
 			dic_file.write(str(item))
 	'''
+	
 	return dic_neigh
 
 '''
@@ -148,7 +149,6 @@ def neigh_coord(mat_dist) :
 	print(dic_list, dic_list.items())
 '''
 def Sphere(number_points) :
-	number_points = int(input("Rentrez le nombre de points souhaité pour la sphère"))
 	index = arange(0, number_points, dtype = float) + 0.5
 	phi = arccos(1 - 2*index/number_points)
 	theta = pi * (1 + 5**0.5) * index
@@ -158,10 +158,12 @@ def Sphere(number_points) :
 
 
 
-filename = sys.argv[1]
-pars = parsing(filename)
-#distance(pars)
-dist_matrix = distance(pars)
-neigh = neighbor(dist_matrix)
-neigh_2 = neigh_coord(neigh)
-Sphere(30)
+if __name__ == "__main__" :
+	filename = sys.argv[1]
+	pars = parsing(filename)
+	#distance(pars)
+	dist_matrix = distance(pars)
+	neigh = neighbor(dist_matrix)
+	neigh_2 = neigh_coord(neigh)
+	number_points = int(input("Rentrez le nombre de points souhaité pour la sphère : "))
+	Sphere(number_points)
