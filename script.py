@@ -184,10 +184,14 @@ def Sphere(number_points, coord) :
 	print(coord)
 	for i, atom in coord.loc[:, 'atom_name'].iteritems() :
 		array_sphere = np.zeros((number_points, 3))
-		x_point = (np.cos(theta) * np.sin(phi))*radius_WdW[atom] 
-		y_point = (np.sin(theta) * np.sin(phi))*radius_WdW[atom] 
-		z_point = np.cos(phi)*radius_WdW[atom] 
+		x_point = (np.cos(theta) * np.sin(phi))*radius_WdW[atom] + coord.loc[:, 'x']
+		print(x_point)
+		y_point = (np.sin(theta) * np.sin(phi))*radius_WdW[atom] + coord.loc[:, 'y']
+		print(y_point)
+		z_point = np.cos(phi)*radius_WdW[atom] + coord.loc[:, 'z']
+		print(z_point)
 		array_sphere = [x_point, y_point, z_point]
+		print(array_sphere)
 		list_sphere.append(array_sphere)
 		print(list_sphere)
 		#pp.figure().add_subplot(111, projection = '3d').scatter(x_point, y_point, z_point)
