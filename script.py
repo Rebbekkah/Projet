@@ -177,25 +177,25 @@ def Sphere(number_points, coord) :
 
 	list_sphere = []
 	goldenRatio = (1 + 5**0.5)/2
-	#index = np.arange(0, number_points, dtype = float)
 	index = np.arange(0, number_points) 
 	phi = np.arccos(1 - 2*(index+0.5)/number_points)
 	theta = np.pi * 2 * index / goldenRatio
 	print(coord)
-	for i, atom in coord.loc[:, 'atom_name'].iteritems() :
-		array_sphere = np.zeros((number_points, 3))
-		x_point = (np.cos(theta) * np.sin(phi))*radius_WdW[atom] + coord.loc[:, 'x']
-		print(x_point)
-		y_point = (np.sin(theta) * np.sin(phi))*radius_WdW[atom] + coord.loc[:, 'y']
-		print(y_point)
-		z_point = np.cos(phi)*radius_WdW[atom] + coord.loc[:, 'z']
-		print(z_point)
+
+	for #i, atom in coord.loc[:, 'atom_name'].iteritems() :
+		print((np.cos(theta) * np.sin(phi))*radius_WdW[atom])
+		#array_sphere = np.zeros((number_points, 3))
+		array_sphere = np.dot(np.ones(number_points, coord.iloc[:,3:]), np.dot(coord.iloc[:,3:])).shape()
+		x_point = (np.cos(theta) * np.sin(phi))*radius_WdW[atom] + coord.iloc[:,3]
+		y_point = (np.sin(theta) * np.sin(phi))*radius_WdW[atom] + coord.iloc[:,4]
+		z_point = np.cos(phi)*radius_WdW[atom] + coord.iloc[:,5]
 		array_sphere = [x_point, y_point, z_point]
 		print(array_sphere)
 		list_sphere.append(array_sphere)
-		print(list_sphere)
-		#pp.figure().add_subplot(111, projection = '3d').scatter(x_point, y_point, z_point)
-		#pp.show()
+
+	return list_sphere
+	pp.figure().add_subplot(111, projection = '3d').scatter(x_point, y_point, z_point)
+	pp.show()
 
 
 
@@ -265,5 +265,5 @@ if __name__ == "__main__" :
 	neigh = neighbor(dist_matrix)
 	dico_neigh, coor_neigh = neigh_coord(neigh, pars)
 	number_points = int(input("Rentrez le nombre de points souhaité pour la sphère : "))
-	Sphere(number_points, pars)
+	sphere = Sphere(number_points, pars)
 
