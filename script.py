@@ -3,7 +3,6 @@ import numpy as np
 import sys
 #from scipy.spatial.distance import pdist
 from scipy.spatial import distance_matrix
-from numpy import pi, cos, sin, arccos, arange
 import mpl_toolkits.mplot3d
 import matplotlib.pyplot as pp
 from collections import defaultdict
@@ -31,7 +30,7 @@ def parsing(filename) : #récupération des coordonnées
 				'''
 				with open("coord_"+filename+".txt", "w") as filout :
 				   coord.to_csv('')
-					'''
+				'''
 		print(atom_name, res_name, res_num)
 
 		coord = pd.DataFrame({'atom_name' : atom_name, 'res_name' : res_name, 'res_num' : res_num, \
@@ -171,12 +170,36 @@ def neigh_coord(mat_dist, coord) :
 				dic_list[all_lists].append(i)	
 	print(dic_list, dic_list.items())
 '''
-def Sphere(number_points, coord, list_coor) :
+def Sphere(number_points, coord) :
+
+	radius_WdW = {'H' : 1.20, 'C' : 1.70, 'N' : 1.55, 'O' : 1.52, \
+		'F' :1.47, 'P' : 1.80, 'S' : 1.80, 'Cl' : 1.75, 'Cu' : 1.4}
+
+	list_sphere = []
+	goldenRatio = (1 + 5**0.5)/2
+	#index = np.arange(0, number_points, dtype = float)
+	index = np.arange(0, number_points) 
+	phi = np.arccos(1 - 2*(index+0.5)/number_points)
+	theta = np.pi * 2 * index / goldenRatio
+	print(coord)
+	for i, atom in coord.loc[:, 'atom_name'].iteritems() :
+		array_sphere = np.zeros((number_points, 3))
+		x_point = (np.cos(theta) * np.sin(phi))*radius_WdW[atom] 
+		y_point = (np.sin(theta) * np.sin(phi))*radius_WdW[atom] 
+		z_point = np.cos(phi)*radius_WdW[atom] 
+		array_sphere = [x_point, y_point, z_point]
+		list_sphere.append(array_sphere)
+		print(list_sphere)
+		#pp.figure().add_subplot(111, projection = '3d').scatter(x_point, y_point, z_point)
+		#pp.show()
+
+
+
 	'''
 	for point in 
 		sphere_point = []
 		for point in range(len(number_points)) :
-	'''
+	
 	x_point = []
 	y_point = []
 	z_point = []
@@ -205,34 +228,38 @@ def Sphere(number_points, coord, list_coor) :
 		elif atom == 'Cu' :
 			radius = 1.70
 
-	for point in range(number_points) :
-		points.append(int(point))
-		for coordinate in points :
-			x_point.append(list_coor.values()[0] + radius)
-			y_point.append(list_coor.values()[1] + radius)
-			z_point.append(list_coor.values()[2] + radius)
-			#x_points.append(point[coordinate]*)
+		for point in range(number_points) :
+			points.append(int(point))
 
-	sphere = pd.DataFrame({'xSphere' : x_point, 'ySphere' : y_point, 'zSphere' : z_point})
+			for coordinate in points :
+				x_point.append((list(list_coor + radius))
+				y_point.append((list(list_coor + radius))
+				z_point.append((list(list_coor + radius))
+
+				
+				x_point.append(list_coor.values([0]) + radius)
+				y_point.append(list_coor.values([1]) + radius)
+				z_point.append(list_coor.values([2]) + radius)
+				'''
+'''		
+				x_point.append(list_coor.values()[0] + radius)
+				y_point.append(list_coor.values()[1] + radius)
+				z_point.append(list_coor.values()[2] + radius)
+				#x_points.append(point[coordinate]*)
+				
+		sphere = pd.DataFrame({'xSphere' : x_point, 'ySphere' : y_point, 'zSphere' : z_point})
 	print(sphere)
 	#print(points)
+'''
 
-	'''
-	index = arange(0, number_points, dtype = float) + 0.5
-	phi = arccos(1 - 2*index/number_points)
-	theta = pi * (1 + 5**0.5) * index
-	x, y, z = cos(theta) * sin(phi), sin(theta) * sin(phi), cos(phi)
-	pp.figure().add_subplot(111, projection = '3d').scatter(x, y, z)
-	pp.show()
-	'''
 
 
 if __name__ == "__main__" :
 	filename = sys.argv[1]
 	pars = parsing(filename)
-	#distance(pars)
 	dist_matrix = distance(pars)
 	neigh = neighbor(dist_matrix)
 	dico_neigh, coor_neigh = neigh_coord(neigh, pars)
 	number_points = int(input("Rentrez le nombre de points souhaité pour la sphère : "))
-	Sphere(number_points, pars, coor_neigh)
+	Sphere(number_points, pars)
+
