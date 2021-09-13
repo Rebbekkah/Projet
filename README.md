@@ -1,5 +1,5 @@
 GOULANCOURT Rebecca M2BI
-# ReadMe "Calcul de la surface accessible au solvant d'une protéine"
+# Calcul de la surface accessible au solvant d'une protéine
 
 ## Informations générales
 
@@ -38,6 +38,9 @@ Le code suit un cheminement particulier présenté ci-dessous sous forme simplif
 3. On place sur chaque atome une sphère, si un point de la pshère est en contact avec un atome voisin alors on l'élimine. Si le point n'est pas en contact avec un voisin alors il est considéré comme exposé au solvant.
 4. On regarde la distance séparant un point de la sphère exposé avec un atome voisin.
 5. Si cette distance est inférieure à la taille d'une molécule d'eau alors celle-ci peut passer et on calcule une surface accessible au solvant.
+6. En comparaison nous pourrons évaluer la validité de nos résultats avec ceux obtenus avec le logiciel FreeSASA, connu pour le calcul de la surface accessible d'une molécule biologique.
+Lien vers le guide d'installation de FreeSASA : https://freesasa.github.io/ ou alors vous pouvez simplement rentrer l'identifiant de la molécule dans la partie "*démo*".
+
 
 ## Lancement du script
 
