@@ -17,7 +17,7 @@ Avant de lancer le code dans votre terminal il faut récupérer la fiche PDB de 
 
 ## Lancement du script
 
-Pour faire tourner le script il faut se placer dans le même dossier que le script et le fichier .pdb de la molécule à analyser. La commande à taper est : "python3 Script_Projet.py id_de_la_molécule.pdb".
+Pour faire tourner le script il faut se placer dans le même dossier que le script et le fichier .pdb de la molécule à analyser. La commande à taper est : "python3 script.py id_de_la_molécule.pdb".
 
 
 
