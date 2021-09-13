@@ -5,7 +5,14 @@ GOULANCOURT Rebecca M2BI
 
 Ce script est écrit en langage Python et calcule la surface accessible d'une protéine par le solvant, ici nous avons pris l'eau comme référence. 
 Il est compilable via la version 3.9 de Python et nécessite l'installation de certaines librairies qui peuvent ne pas être initialement présentes dans votre environnement.
-Les bibliothèques requises sont : **pandas, numpy, scipy, matplotlib, sys, mpl_toolkits et collections**.
+Les bibliothèques requises sont : **
+- pandas 
+- numpy
+- scipy
+- matplotlib
+- sys
+- mpl_toolkits
+- collections**
 ***
 Vous pouvez télécharger au préalable ces librairies via la commande "*conda install nom_du_module*" dans le shell, mais il faut avoir installé au minimum miniconda sur votre ordinateur.
 Lien vers miniconda : https://docs.conda.io/en/latest/miniconda.html
