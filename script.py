@@ -55,7 +55,7 @@ def neighbor(mat_dist) :
 	print(fold)
 	mat_dist[mat_dist <= fold] = 1
 	mat_dist[mat_dist > fold] = 0
-	mat_dist.to_csv("mat_dist"+filename+".txt", sep = "\t")
+	# mat_dist.to_csv("mat_dist"+filename+".txt", sep = "\t")
 	# print(type(mat_dist))
 	# matrix_distance[matrix_distance < fold] = 1
 	# matrix_distance[matrix_distance > fold] = 0
@@ -138,16 +138,28 @@ def neigh_coord(mat_dist, coord) :
 		for item in dic_neigh :
 			dic_file.write(str(item))
 	'''
+
+	for atom in dic_neigh :
+		list_coor_neigh = []
+		list_coor_neigh.append(atom)
+		for value in dic_neigh[atom] :
+			list_coor_neigh.append(value)
+		list_coor = []
+		for row in coord.iloc[list_coor_neigh[1:], ].iterrows() :
+			list_coor.append([row[1][3], row[1][4], row[1][5]])
+	print(list_coor)
+
+	'''
 	for atom in dic_neigh.keys() :
 		for index in dic_neigh.values() :
 			list_neigh_coor = []
 			for row in coord.iloc[:, 4:] :
 				list_neigh_coor.append(row) 
 			dic_coor_neigh[index] = list_neigh_coor
-		print(dic_coor_neigh)
+	print(dic_coor_neigh)
+	'''
 
-
-	return dic_neigh
+	return dic_neigh, list_coor
 
 '''
 	dic_list = defaultdict(list)
@@ -175,6 +187,6 @@ if __name__ == "__main__" :
 	#distance(pars)
 	dist_matrix = distance(pars)
 	neigh = neighbor(dist_matrix)
-	neigh_2 = neigh_coord(neigh, pars)
+	dico_neigh, coor_neigh = neigh_coord(neigh, pars)
 	number_points = int(input("Rentrez le nombre de points souhaité pour la sphère : "))
 	Sphere(number_points)
