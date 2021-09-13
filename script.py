@@ -171,14 +171,60 @@ def neigh_coord(mat_dist, coord) :
 				dic_list[all_lists].append(i)	
 	print(dic_list, dic_list.items())
 '''
-def Sphere(number_points) :
+def Sphere(number_points, coord, list_coor) :
+	'''
+	for point in 
+		sphere_point = []
+		for point in range(len(number_points)) :
+	'''
+	x_point = []
+	y_point = []
+	z_point = []
+	points = []
+
+	radius_WdW = {'H' : 1.20, 'C' : 1.70, 'N' : 1.55, 'O' : 1.52, \
+		'F' :1.47, 'P' : 1.80, 'S' : 1.80, 'Cl' : 1.75, 'Cu' : 1.4}
+
+	for atom in coord.loc[:, 'atom_name'] :
+		if atom == 'H' :
+			radius = 1.20
+		elif atom == 'C' :
+			radius = 1.70
+		elif atom == 'N' :
+			radius = 1.70
+		elif atom == 'O' :
+			radius = 1.70
+		elif atom == 'F' :
+			radius = 1.70
+		elif atom == 'P' :
+			radius = 1.70
+		elif atom == 'S' :
+			radius = 1.70
+		elif atom == 'Cl' :
+			radius = 1.70
+		elif atom == 'Cu' :
+			radius = 1.70
+
+	for point in range(number_points) :
+		points.append(int(point))
+		for coordinate in points :
+			x_point.append(list_coor.values()[0] + radius)
+			y_point.append(list_coor.values()[1] + radius)
+			z_point.append(list_coor.values()[2] + radius)
+			#x_points.append(point[coordinate]*)
+
+	sphere = pd.DataFrame({'xSphere' : x_point, 'ySphere' : y_point, 'zSphere' : z_point})
+	print(sphere)
+	#print(points)
+
+	'''
 	index = arange(0, number_points, dtype = float) + 0.5
 	phi = arccos(1 - 2*index/number_points)
 	theta = pi * (1 + 5**0.5) * index
 	x, y, z = cos(theta) * sin(phi), sin(theta) * sin(phi), cos(phi)
 	pp.figure().add_subplot(111, projection = '3d').scatter(x, y, z)
 	pp.show()
-
+	'''
 
 
 if __name__ == "__main__" :
@@ -189,4 +235,4 @@ if __name__ == "__main__" :
 	neigh = neighbor(dist_matrix)
 	dico_neigh, coor_neigh = neigh_coord(neigh, pars)
 	number_points = int(input("Rentrez le nombre de points souhaité pour la sphère : "))
-	Sphere(number_points)
+	Sphere(number_points, pars, coor_neigh)
