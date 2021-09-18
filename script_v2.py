@@ -132,26 +132,29 @@ def neigh_coord(mat_dist) :
 		Liste des voisins et leurs coordonnées
 
 	"""
-	print(type(mat_dist))
-	print(mat_dist == 1)
-	list_neigh = []
-	neighbor = []
-
-
-
-
-
+	
+	dico_neigh = {}
 	for atom in mat_dist :
-		if (mat_dist[mat_dist == 1] == TRUE) :
-			neighbor.append(mat_dist[atom])
-		
+		match = mat_dist[atom][mat_dist[atom] == 1]
+		dico_neigh[atom] = match.index.tolist()
+
+	print(dico_neigh[0])
+
+	'''
+	for atom in mat_dist :
+		col = mat_dist[atom].tolist()
+		#print(col)
+		#break
+		for element in col :
+			if (element == 1) :
+				neighbor.append(mat_dist[mat_dist[atom]])
+			
 	list_neigh.append(mat_dist[mat_dist == 1].index.tolist())
 	dico_neigh = dict(zip(list_neigh, neighbor))
 
 	print(dico_neigh)
-	
+	'''
 	return list_neigh
-	
 
 	'''
 	index_list = mat_dist.index.values.tolist() # on transforme les lignes de la matrice en liste
