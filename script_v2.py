@@ -198,6 +198,9 @@ def Sphere(number_points, coord, dico_neigh) :
 	return coord_sphere
 
 
+def distance_sphere(coord_sphere, dico_neigh) :
+	
+
 
 if __name__ == "__main__" :
 	filename = sys.argv[1] # récupération du nom de fichier passé en argument
