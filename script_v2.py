@@ -106,7 +106,7 @@ def neighbor(mat_dist) :
 	mat_dist[mat_dist <= fold] = 1 # Si la distance est inférieur à 2*radius_WdW + radius du solvant alors les atomes sont voisins
 	mat_dist[mat_dist > fold] = 0 # Sinon ils ne le sont pas
 	print(mat_dist)
-	print(type(mat_dist))
+	#print(type(mat_dist))
 	return(mat_dist)
 
 
@@ -138,50 +138,10 @@ def neigh_coord(mat_dist) :
 		match = mat_dist[atom][mat_dist[atom] == 1]
 		dico_neigh[atom] = match.index.tolist()
 
-	print(dico_neigh[0])
+	#print(dico_neigh[0])
 
-	'''
-	for atom in mat_dist :
-		col = mat_dist[atom].tolist()
-		#print(col)
-		#break
-		for element in col :
-			if (element == 1) :
-				neighbor.append(mat_dist[mat_dist[atom]])
-			
-	list_neigh.append(mat_dist[mat_dist == 1].index.tolist())
-	dico_neigh = dict(zip(list_neigh, neighbor))
+	return dico_neigh
 
-	print(dico_neigh)
-	'''
-	return list_neigh
-
-	'''
-	index_list = mat_dist.index.values.tolist() # on transforme les lignes de la matrice en liste
-	row_list = mat_dist.values.tolist() # on transforme les éléments de la matrice en liste
-	# Initialisation des dictionnaires vides
-	dic_neigh = {} 
-	dic_coor_neigh = {}
-
-	for index in range(len(index_list)) : # on parcourt les lignes de mat_dist
-		list_neigh = []
-		for row in range(len(row_list[index])-1) : # on parcourt les valeurs de la ligne de mat_dist
-			if row_list[index][row] == 1 : # Si les atomes sont voisins alors on récupère le voisin
-				list_neigh.append(row)
-		dic_neigh[index] = list_neigh
-
-	for atom in dic_neigh : # on récupère les atomes voisins puis y associer leurs coordonnées
-		list_coor_neigh = []
-		list_coor_neigh.append(atom)
-		for value in dic_neigh[atom] :
-			list_coor_neigh.append(value)
-		list_coor = []
-		for row in coord.iloc[list_coor_neigh[1:], ].iterrows() :
-			list_coor.append([row[1][3], row[1][4], row[1][5]]) # récupération des coordonnées et stockage
-	print(list_coor)
-
-	return dic_neigh, list_coor
-	'''
 
 def Fibonacci(number_points) :
 	"""Visualisation de la sphère à placer autour de chaque atomes
@@ -201,7 +161,7 @@ def Fibonacci(number_points) :
 	pp.show()
 
 
-def Sphere(number_points, coord) :
+def Sphere(number_points, coord, dico_neigh) :
 	"""Définition de la sphère à placer autour de chaque atome, de ses points et leurs coordonnées
 
 	Parameters
@@ -214,26 +174,28 @@ def Sphere(number_points, coord) :
 
 	"""
 
-	list_sphere = [] # liste des points de la sphère
+	list_sphere = []
+	coord_sphere = {}
+	coord_sphere['x'] = []
+	coord_sphere['y'] = []
+	coord_sphere['z'] = []
 
-	# initialisation des variables pour positionner une sphère de number_points équidistants
 	goldenRatio = (1 + 5**0.5)/2
 	index = np.arange(0, number_points) 
 	phi = np.arccos(1 - 2*(index+0.5)/number_points)
 	theta = np.pi * 2 * index / goldenRatio
-	
-	for i, atom in coord.loc[:, 'atom_name'].iteritems() :
-		array_sphere = np.dot(np.ones(number_points, coord.iloc[:,3:]), np.dot(coord.iloc[:,3:], number_points)).shape() # ajustement de la dimension des données
-		# Centrage des sphères sur les atomes
-		x_point = (np.cos(theta) * np.sin(phi))*radius_WdW[atom] + coord.iloc[:,3]
-		y_point = (np.sin(theta) * np.sin(phi))*radius_WdW[atom] + coord.iloc[:,4]
-		z_point = np.cos(phi)*radius_WdW[atom] + coord.iloc[:,5]
-		array_sphere = [x_point, y_point, z_point] # coordonnées de chaque points
-		list_sphere.append(array_sphere) # contenant les points de la sphère et ses coordonnées
 
-	pp.figure().add_subplot(111, projection = '3d').scatter(array_sphere)
-	pp.show()
+	for atom in dico_neigh :
+		x_point = (np.cos(theta) * np.sin(phi))*radius_WdW[coord.iloc[atom,0]] + coord.iloc[atom,3]
+		y_point = (np.sin(theta) * np.sin(phi))*radius_WdW[coord.iloc[atom,0]] + coord.iloc[atom,4]
+		z_point = np.cos(phi)*radius_WdW[coord.iloc[atom,0]] + coord.iloc[atom,5]
+		coord_sphere['x'].append(x_point)
+		coord_sphere['y'].append(y_point)
+		coord_sphere['z'].append(z_point)
 
+	print(coord_sphere)
+
+	return coord_sphere
 
 
 
@@ -246,10 +208,8 @@ if __name__ == "__main__" :
 	dist_matrix = distance(pars)
 	neigh = neighbor(dist_matrix)
 
-	neigh_coord(neigh)
-	#dico_neigh, coor_neigh = neigh_coord(neigh, pars)
-	#number_points = int(input("Rentrez le nombre de points souhaité pour la sphère : "))
+	dico_neighbor = neigh_coord(neigh)
 	Fibonacci(number_points)
-	Sphere(number_points, pars)
+	points_coord = Sphere(number_points, pars, dico_neighbor)
 
 
